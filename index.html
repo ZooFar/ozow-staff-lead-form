@@ -192,48 +192,10 @@
       margin: 16px 0;
     }
 
-    .checkbox-grid {
+    .name-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .checkbox-label {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      background: #fafffe;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 9px 12px;
-      cursor: pointer;
-      font-size: 13.5px;
-      font-weight: 500;
-      color: var(--ink);
-      transition: border-color 0.2s, background 0.2s;
-      margin-bottom: 0;
-    }
-
-    .checkbox-label:hover {
-      border-color: var(--teal);
-      background: var(--teal-light);
-    }
-
-    .checkbox-label input[type="checkbox"] {
-      width: 16px; height: 16px;
-      accent-color: var(--teal);
-      cursor: pointer;
-      flex-shrink: 0;
-      padding: 0;
-      border: none;
-      background: none;
-      box-shadow: none;
-    }
-
-    .checkbox-label input[type="checkbox"]:focus {
-      box-shadow: none;
-      border: none;
+      gap: 12px;
     }
 
     .submit-btn {
@@ -269,7 +231,7 @@
     @media (max-width: 480px) {
       .card-body   { padding: 20px 16px; }
       .card-header { padding: 20px 16px 16px; }
-      .checkbox-grid { grid-template-columns: 1fr; }
+      .name-row    { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -287,7 +249,7 @@
   </div>
 
   <form
-    action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"
+    action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00D8d000003V5mN"
     method="POST"
     class="card-body"
     id="leadForm"
@@ -299,14 +261,16 @@
     <input type="hidden" name="lead_source" value="Internal Staff Referral" />
 
     <!-- Hidden combined description field (built by JS on submit) -->
-    <input type="hidden" name="Description" id="descriptionField" />
+    <input type="hidden" name="description" id="descriptionField" />
 
     <!-- ── Submitted By ── -->
     <div class="section-label">Submitted By</div>
     <div class="form-group">
-      <label for="staffName">Your Full Name</label>
-      <!-- Maps to: Title -->
-      <input type="text" id="staffName" name="Title" placeholder="e.g. Zulfaa Arend" required />
+      <label>Your Full Name</label>
+      <div class="name-row">
+        <input type="text" id="first_name" name="first_name" placeholder="First name" required />
+        <input type="text" id="last_name"  name="last_name"  placeholder="Last name"  required />
+      </div>
     </div>
 
     <div class="divider"></div>
@@ -316,14 +280,12 @@
 
     <div class="form-group">
       <label for="company">Company Name</label>
-      <!-- Maps to: Company -->
-      <input type="text" id="company" name="Company" placeholder="e.g. Ozow (Pty) Ltd" required />
+      <input type="text" id="company" name="company" placeholder="e.g. Ozow (Pty) Ltd" required />
     </div>
 
     <div class="form-group">
       <label for="url">Website <span class="opt">optional</span></label>
-      <!-- Maps to: Website -->
-      <input type="url" id="url" name="Website" placeholder="ozow.com" />
+      <input type="url" id="url" name="url" placeholder="https://example.com" />
     </div>
 
     <div class="divider"></div>
@@ -333,20 +295,18 @@
 
     <div class="form-group">
       <label for="email">Email <span class="opt">optional</span></label>
-      <!-- Maps to: Email -->
-      <input type="email" id="email" name="Email" placeholder="" />
+      <input type="email" id="email" name="email" placeholder="" />
     </div>
 
     <div class="form-group">
       <label for="phone">Tel <span class="opt">optional</span></label>
-      <!-- Maps to: Phone -->
-      <input type="tel" id="phone" name="Phone" placeholder="" />
+      <input type="tel" id="phone" name="phone" placeholder="" />
     </div>
 
     <div class="divider"></div>
 
     <!-- ── Competitors ── -->
-    <div class="section-label">Competitors on Checkout you <span style="text-transform:none;font-weight:400;letter-spacing:0;font-size:10px;color:var(--muted);"> — optional</span></div>
+    <div class="section-label">Competitors on Checkout <span style="text-transform:none;font-weight:400;letter-spacing:0;font-size:10px;color:var(--muted);"> — optional</span></div>
     <div class="form-group">
       <label for="competitors_other">Which payment providers did you spot on their checkout page?</label>
       <textarea id="competitors_other" placeholder="e.g. Stitch, Peach Payments, Payfast etc"></textarea>
@@ -358,7 +318,6 @@
     <div class="section-label">Comments</div>
     <div class="form-group">
       <label for="comments">Any notes for the sales team <span class="opt">optional</span></label>
-      <!-- Combined with competitors into description field via JS -->
       <textarea id="comments" placeholder="Add any extra context that might help…"></textarea>
     </div>
 
