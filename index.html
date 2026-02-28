@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Submit a Lead | Ozow</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:       #75ba75;
+      --teal:        #01d198;
+      --purple-tint: rgba(150, 167, 255, 0.30);
+      --ink:         #0f1f1a;
+      --muted:       #5a7268;
+      --surface:     #ffffff;
+      --border:      #d8ede6;
+      --bg:          #f0faf6;
+      --teal-light:  rgba(1, 209, 152, 0.10);
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      background-image:
+        radial-gradient(ellipse at 80% 0%, var(--purple-tint) 0%, transparent 55%),
+        radial-gradient(ellipse at 10% 90%, rgba(117,186,117,0.18) 0%, transparent 50%);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 32px 16px 40px;
+    }
+
+    .card {
+      background: var(--surface);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 620px;
+      box-shadow: 0 1px 2px rgba(1,209,152,0.06), 0 12px 40px rgba(15,31,26,0.10);
+      overflow: hidden;
+      border: 1px solid rgba(1,209,152,0.15);
+    }
+
+    .card-header {
+      background: linear-gradient(135deg, #0f1f1a 0%, #1a3d2e 60%, #0d2e23 100%);
+      padding: 24px 32px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-header::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(1,209,152,0.22) 0%, transparent 70%);
+    }
+
+    .card-header::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: -20px;
+      width: 180px; height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--purple-tint) 0%, transparent 70%);
+    }
+
+    .ozow-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(1,209,152,0.15);
+      border: 1px solid rgba(1,209,152,0.35);
+      border-radius: 20px;
+      padding: 4px 12px;
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .ozow-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--teal);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.6; transform: scale(0.85); }
+    }
+
+    .ozow-badge span {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    .card-header h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+      position: relative;
+      margin-bottom: 6px;
+    }
+
+    .card-header h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--teal), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .card-header p {
+      font-size: 13.5px;
+      color: rgba(255,255,255,0.5);
+      position: relative;
+    }
+
+    .card-body { padding: 24px 32px; }
+
+    .section-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    .form-group { margin-bottom: 12px; }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    label .opt {
+      font-weight: 400;
+      color: var(--muted);
+      font-size: 12px;
+      margin-left: 4px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      color: var(--ink);
+      background: #fafffe;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      outline: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--teal);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(1,209,152,0.12);
+    }
+
+    textarea { resize: vertical; min-height: 70px; }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 16px 0;
+    }
+
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      background: #fafffe;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 12px;
+      cursor: pointer;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--ink);
+      transition: border-color 0.2s, background 0.2s;
+      margin-bottom: 0;
+    }
+
+    .checkbox-label:hover {
+      border-color: var(--teal);
+      background: var(--teal-light);
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      width: 16px; height: 16px;
+      accent-color: var(--teal);
+      cursor: pointer;
+      flex-shrink: 0;
+      padding: 0;
+      border: none;
+      background: none;
+      box-shadow: none;
+    }
+
+    .checkbox-label input[type="checkbox"]:focus {
+      box-shadow: none;
+      border: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--green) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px; font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+      margin-top: 6px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.92;
+      box-shadow: 0 6px 20px rgba(1,209,152,0.35);
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:active { transform: translateY(0); }
+
+    .footer-note {
+      text-align: center; font-size: 12px;
+      color: var(--muted); margin-top: 14px;
+    }
+
+    .footer-note span { color: var(--teal); font-weight: 600; }
+
+    @media (max-width: 480px) {
+      .card-body   { padding: 20px 16px; }
+      .card-header { padding: 20px 16px 16px; }
+      .checkbox-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <div class="card-header">
+    <div class="ozow-badge">
+      <div class="ozow-dot"></div>
+      <span>Ozow Internal</span>
+    </div>
+    <h1>Submit a <em>New Lead</em></h1>
+    <p>Complete the fields below with as much information as possible.</p>
+  </div>
+
+  <form
+    action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"
+    method="POST"
+    class="card-body"
+    id="leadForm"
+    onsubmit="buildDescription()"
+  >
+    <!-- Hidden Salesforce fields -->
+    <input type="hidden" name="oid"         value="00D8d000003V5mN" />
+    <input type="hidden" name="retURL"      value="https://ozowpayments.sharepoint.com/:u:/s/Team/IQDbiSX4PKSdToUu6PK7qeViAebU9o1Q23VyrCQ67NHbNuk?e=tJr7GN" />
+    <input type="hidden" name="lead_source" value="Internal Staff Referral" />
+
+    <!-- Hidden combined description field (built by JS on submit) -->
+    <input type="hidden" name="description" id="descriptionField" />
+
+    <!-- ── Submitted By ── -->
+    <div class="section-label">Submitted By</div>
+    <div class="form-group">
+      <label for="staffName">Your Full Name</label>
+      <!-- Maps to: Title -->
+      <input type="text" id="staffName" name="title" placeholder="e.g. Zulfaa Arend" required />
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ── Lead Details ── -->
+    <div class="section-label">Lead Details</div>
+
+    <div class="form-group">
+      <label for="company">Company Name</label>
+      <!-- Maps to: Company -->
+      <input type="text" id="company" name="company" placeholder="e.g. Ozow (Pty) Ltd" required />
+    </div>
+
+    <div class="form-group">
+      <label for="url">Website <span class="opt">optional</span></label>
+      <!-- Maps to: Website -->
+      <input type="url" id="url" name="URL" placeholder="ozow.com" />
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ── Contact Details ── -->
+    <div class="section-label">Contact Details <span style="text-transform:none;font-weight:400;letter-spacing:0;font-size:10px;color:var(--muted);"> - if you have them</span></div>
+
+    <div class="form-group">
+      <label for="email">Email <span class="opt">optional</span></label>
+      <!-- Maps to: Email -->
+      <input type="email" id="email" name="email" placeholder="" />
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Tel <span class="opt">optional</span></label>
+      <!-- Maps to: Phone -->
+      <input type="tel" id="phone" name="phone" placeholder="" />
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ── Competitors ── -->
+    <div class="section-label">Competitors on Checkout you <span style="text-transform:none;font-weight:400;letter-spacing:0;font-size:10px;color:var(--muted);"> — optional</span></div>
+    <div class="form-group">
+      <label for="competitors_other">Which payment providers did you spot on their checkout page?</label>
+      <textarea id="competitors_other" placeholder="e.g. Stitch, Peach Payments, Payfast etc"></textarea>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- ── Comments ── -->
+    <div class="section-label">Comments</div>
+    <div class="form-group">
+      <label for="comments">Any notes for the sales team <span class="opt">optional</span></label>
+      <!-- Combined with competitors into description field via JS -->
+      <textarea id="comments" placeholder="Add any extra context that might help…"></textarea>
+    </div>
+
+    <button type="submit" class="submit-btn">
+      Submit Lead &nbsp;→
+    </button>
+    <p class="footer-note">"If everyone is moving forward together, then <span>success</span> takes care of itself." <span>- Henry Ford</span></p>
+
+  </form>
+</div>
+
+<script>
+  function buildDescription() {
+    const competitors = document.getElementById('competitors_other').value.trim();
+    const comments    = document.getElementById('comments').value.trim();
+
+    let parts = [];
+
+    if (competitors) {
+      parts.push('Competitors on checkout: ' + competitors);
+    }
+    if (comments) {
+      parts.push('Notes for sales team: ' + comments);
+    }
+
+    document.getElementById('descriptionField').value = parts.join(' | ');
+  }
+</script>
+
+</body>
+</html>
