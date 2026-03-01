@@ -170,7 +170,7 @@
 
     ::placeholder {
       color: #a8bdb7;
-      font-size: 11px;
+      font-size: 13px;
     }
 
     input[type="text"],
@@ -267,14 +267,16 @@
     id="leadForm"
     onsubmit="buildDescription()"
   >
-    <!-- Hidden Salesforce fields, i'm tired can't think anymore lol -->
+    <!-- Hidden Salesforce fields -->
     <input type="hidden" name="oid"          value="00D8d000003V5mN" />
     <input type="hidden" name="retURL"       value="https://ZooFar.github.io/ozow-staff-lead-form/lead-thankyou-sf.html" />
     <input type="hidden" name="lead_source"  value="Internal Staff Referral" />
+    <input type="hidden" name="debug"        value="1" />
+    <input type="hidden" name="debugEmail"   value="zulfaaa@ozow.com" />
     <input type="hidden" name="industry"     value="other" />
 
     <!-- Hidden combined description field (built by JS on submit) -->
-    <input type="hidden" name="description" id="descriptionField" />
+    <input type="hidden" name="subject__c" id="descriptionField" />
 
     <!-- ── Submitted By ── -->
     <div class="section-label">Submitted By</div>
@@ -307,8 +309,8 @@
     <div class="section-label">Contact Details <span style="text-transform:none;font-weight:400;letter-spacing:0;font-size:10px;color:var(--muted);"> - if you have them</span></div>
 
     <div class="form-group">
-      <label for="email">Email <span class="req">*</span></label>
-      <input type="email" id="email" name="email" placeholder="If you don't have the lead's email, just pop in yours :)" required />
+      <label for="email">Email <span class="opt"> — optional</span></label>
+      <input type="email" id="email" name="email" placeholder=""/>
     </div>
 
     <div class="form-group">
@@ -346,6 +348,20 @@
   function buildDescription() {
     const competitors = document.getElementById('competitors_other').value.trim();
     const comments    = document.getElementById('comments').value.trim();
+    const emailField  = document.getElementById('email');
+    const phoneField  = document.getElementById('phone');
+
+    // If no email and no phone, generate a unique fallback email
+    if (!emailField.value.trim() && !phoneField.value.trim()) {
+      const now     = new Date();
+      const yy      = String(now.getFullYear()).slice(2);
+      const mm      = String(now.getMonth() + 1).padStart(2, '0');
+      const dd      = String(now.getDate()).padStart(2, '0');
+      const hh      = String(now.getHours()).padStart(2, '0');
+      const min     = String(now.getMinutes()).padStart(2, '0');
+      const ss      = String(now.getSeconds()).padStart(2, '0');
+      emailField.value = 'lead-' + yy + mm + dd + '-' + hh + min + ss + '@ozow.com';
+    }
 
     let parts = [];
 
